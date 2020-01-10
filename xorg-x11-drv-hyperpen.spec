@@ -4,28 +4,33 @@
 
 Summary:   Xorg X11 hyperpen input driver
 Name:      xorg-x11-drv-hyperpen
-Version:   1.3.0
-Release:   4%{?dist}
+Version:   1.4.1
+Release:   2%{?dist}
 URL:       http://www.x.org
 License:   MIT
 Group:     User Interface/X Hardware Support
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Source0:   ftp://ftp.x.org/pub/individual/driver/%{tarball}-%{version}.tar.bz2
-Patch1:    hyperpen-1.3.0-abi.patch
+Patch01:   0001-Don-t-free-anything-in-PreInit-let-UnInit-take-care-.patch
+Patch02:   0002-Use-xf86SetStrOption-for-Option-Device.patch
+Patch03:   0003-Test-device-in-PreInit-fail-if-it-cannot-be-opened.patch
 
 ExcludeArch: s390 s390x
 
-BuildRequires: xorg-x11-server-sdk >= 1.3.0.0-6
+BuildRequires: xorg-x11-server-sdk >= 1.10.0-1
 
-Requires:  xorg-x11-server-Xorg >= 1.3.0.0-6
+Requires:  Xorg %(xserver-sdk-abi-requires ansic)
+Requires:  Xorg %(xserver-sdk-abi-requires xinput)
 
 %description 
 X.Org X11 hyperpen input driver.
 
 %prep
 %setup -q -n %{tarball}-%{version}
-%patch1 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
 
 %build
 %configure --disable-static
@@ -48,6 +53,15 @@ rm -rf $RPM_BUILD_ROOT
 %{driverdir}/hyperpen_drv.so
 
 %changelog
+* Tue Jul 19 2011 Peter Hutterer <peter.hutterer@redhat.com> 1.4.1-2
+- Fix crashers on failed PreInit
+
+* Tue Jul 05 2011 Peter Hutterer <peter.hutterer@redhat.com> 1.4.1-1
+- hyperpen 1.4.1 (#713802), fixes startup crash with 1.4.0
+
+* Mon Jun 27 2011 Peter Hutterer <peter.hutterer@redhat.com> 1.4.0-1
+- hyperpen 1.4.0 (#713802)
+
 * Wed Jan 06 2010 Peter Hutterer <peter.hutterer@redhat.com> 1.3.0-4
 - User global instead of define as per Packaging Guidelines.
 - Fix indentation for Version and Release.
