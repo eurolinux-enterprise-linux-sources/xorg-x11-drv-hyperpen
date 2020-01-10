@@ -5,7 +5,7 @@
 Summary:   Xorg X11 hyperpen input driver
 Name:      xorg-x11-drv-hyperpen
 Version:   1.4.1
-Release:   5%{?dist}
+Release:   6%{?dist}
 URL:       http://www.x.org
 License:   MIT
 Group:     User Interface/X Hardware Support
@@ -53,6 +53,9 @@ rm -rf $RPM_BUILD_ROOT
 %{driverdir}/hyperpen_drv.so
 
 %changelog
+* Wed Nov 11 2015 Adam Jackson <ajax@redhat.com> - 1.4.1-6
+- Rebuild for server 1.17
+
 * Wed Apr 23 2014 Adam Jackson <ajax@redhat.com> 1.4.1-5
 - Rebuild for server 1.15
 
